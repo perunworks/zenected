@@ -7,7 +7,7 @@ __Zenected__ is a cloud based security threat protection service. It’s deliver
 All services are updated every hour with a new set of threat indicators prepared by Perun Works.
 
 __Zenected__ is easy to manage. It uses a web front-end for administrators to manage your instance. An administrator user can:
-- manage Zenected users including adding more admin users
+- manage __Zenected__ users including adding more admin users
 - blacklist URLs or domain names that you don't want your users to access
 - whitelist URLs or domain names, that were identified as malicious but you still want your users to be able to get to them
 - review exception requests from users
