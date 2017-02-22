@@ -6,3 +6,5 @@ Zenected is a cloud based security threat protection service. It’s delivered t
 All services are updated every hour with a new set of threat indicators prepared by Perun Works.
 
 For more info visit: https://zenected.com
+
+Zenected code posted on GitHub is licensed under GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html)
