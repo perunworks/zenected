@@ -17,7 +17,7 @@ If you are a __Zenected__ end-user what you will like about it, is:
 
 For more info and resources visit: https://zenected.com
 
-__Zenected__ code posted on GitHub is licensed under GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html)
+__Zenected__ code posted on GitHub is licensed under GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html). more code will be posted in due course so please visit this pages regurarly.
 
 ##Requirements
 1. Host running Ubuntu 14.04 LTS. You can use the mini install (https://help.ubuntu.com/community/Installation/MinimalCD)
@@ -29,6 +29,8 @@ __Zenected__ code posted on GitHub is licensed under GNU General Public License 
    `udp 4500` (VPN)
 
 ##Installation
+It's fairly simple, but requires a few steps.
+
 1. Copy the **__zenected_install.sh__** into your future __Zenected__ server to __/opt__ folder.
 2. Make the file executable by:
    `sudo chmod 750 /opt/zenected_install.sh`
@@ -41,3 +43,20 @@ __Zenected__ code posted on GitHub is licensed under GNU General Public License 
    `sudo apt-get install zenected-aws`
 7. Once __zenected__ is installed on your system, please configure it by running:
    `sudo /opt/zenected/zenected_setup.zenx`
+   
+##Thanks!
+__Zenected__ uses a lot of great free software. Here is a list:
+
+- Ubuntu (http://www.ubuntu.com/)
+- PHP (https://secure.php.net/)
+- MySQL (http://www.mysql.com/)
+- daloRADIUS (http://www.daloradius.com/)
+- Dnsmasq (http://www.thekelleys.org.uk/dnsmasq/doc.html)
+- Squid (http://www.squid-cache.org/)
+- SquidGuard (http://www.squidguard.org/)
+
+##News and updates
+For news and updates please follow us on:
+
+- Facebook: https://www.facebook.com/Zenected/
+- Twitter: https://twitter.com/zenected
