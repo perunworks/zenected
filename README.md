@@ -17,7 +17,7 @@ If you are a __Zenected__ end-user what you will like about it, is:
 
 For more info and resources visit: https://zenected.com
 
-__Zenected__ code posted on GitHub is licensed under GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html). More code will be posted in due course so please visit this pages regurarly.
+__Zenected__ code posted on GitHub is licensed under GNU General Public License (https://www.gnu.org/licenses/gpl-3.0.en.html). More code will be posted in due course so please visit this pages regularly.
 
 ##Requirements
 1. Host running Ubuntu 14.04 LTS. You can use the mini install (https://help.ubuntu.com/community/Installation/MinimalCD)
