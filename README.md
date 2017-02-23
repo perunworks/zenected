@@ -23,22 +23,21 @@ __Zenected__ code posted on GitHub is licensed under GNU General Public License 
 1. Host running Ubuntu 14.04 LTS. You can use the mini install (https://help.ubuntu.com/community/Installation/MinimalCD)
 2. If you plan to run it at home, please make sure you have a routable IP address. If you are not sure about it, please ask you ISP for help.
 3. Make sure you open the following ports on your router:
-   tcp 80 (webserver)
-   tcp 443 (webserver - user admin and Zenected admin)
-   udp 500 (VPN)
-   udp 4500 (VPN)
+   `tcp 80` (webserver),
+   `tcp 443` (webserver - user admin and Zenected admin),
+   `udp 500` (VPN),
+   `udp 4500` (VPN)
 
 ##Installation
-Installation is fairly simple but requires a few steps.
 1. Copy the **__zenected_install.sh__** into your future __Zenected__ server to __/opt__ folder.
 2. Make the file executable by:
-   sudo chmod 750 /opt/zenected_install.sh
+   `sudo chmod 750 /opt/zenected_install.sh`
 3. Run it:
-   sudo /opt/zenected_install.sh
+   `sudo /opt/zenected_install.sh`
 4. Relax for a few minutes. Now it's a good time to grab a coffee. The install will take a few minutes depending on your system specs.
 5. Once the script finishes, check if __Zenected__ got installed by:
-   dpkg -s zenected-aws
+   `dpkg -s zenected-aws`
 6. If the __zenected__ package is not installed, you can install it by:
-   sudo apt-get install zenected-aws
+   `sudo apt-get install zenected-aws`
 7. Once __zenected__ is installed on your system, please configure it by running:
-   sudo /opt/zenected/zenected_setup.zenx
+   `sudo /opt/zenected/zenected_setup.zenx`
