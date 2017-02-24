@@ -2,9 +2,9 @@
 # Welcome message
 echo -e "\n\nThanks for installing Zenected Threat Defense VPN. The whole process will take a few minutes depending on your system specs.\n"
 
-#hiding output
-{
-} &> /dev/null #un-hiding output
+##hiding output
+#{
+#} &> /dev/null #un-hiding output
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # OS: update the system
 echo -e "1. Updating the OS and installing initial dependencies"
