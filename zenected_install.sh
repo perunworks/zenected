@@ -1717,7 +1717,7 @@ echo -e "12. Installing and configuring Zenected"
 #hiding output
 {
 
-apt-get install software-properties-common
+apt-get -qq -y install software-properties-common
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EDEA5A7B
 add-apt-repository "deb http://repository.perunworks.com/ trusty main"
 apt-get update > /dev/null
