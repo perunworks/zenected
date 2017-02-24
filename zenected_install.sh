@@ -21,7 +21,7 @@ echo -e "Installing dependencies"
 } &> /dev/null #un-hiding output
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # For a start: Creating Zenected config file and relevant dirs
-echo -e "2. Creating Zenected config file and relevant dirs\n"
+echo -e "2. Creating Zenected config file and relevant dirs"
 
 #hiding output
 {
@@ -772,7 +772,7 @@ SQUIDGUARD
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # User mngm: Radius
-echo -e "9. Installing and configuring User management\n"
+echo -e "9. Installing and configuring User management"
 
 #hiding output
 {
@@ -1451,7 +1451,7 @@ service freeradius restart
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # VPN: l2tp
-echo -e "10. Installing and configuring VPN\n"
+echo -e "10. Installing and configuring VPN"
 
 #hiding output
 {
@@ -1678,7 +1678,7 @@ EOF
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # DNS: dnamasq
-echo -e "11. Installing and configuring DNS\n"
+echo -e "11. Installing and configuring DNS"
 
 #hiding output
 {
@@ -1712,7 +1712,7 @@ service dnsmasq restart
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #Zenected repo and service
-echo -e "12. Installing and configuring Zenected\n"
+echo -e "12. Installing and configuring Zenected"
 
 #hiding output
 {
@@ -1760,7 +1760,7 @@ echo -e "<?php \$zenredir_db_pass=\"$ZENREDIR_MYSQLPASS\"; ?>" > /var/www/html/z
 } &> /dev/null #un-hiding output
 
 
-echo -e "13. Updating Zenected\n"
+echo -e "13. Updating Zenected"
 
 #hiding output
 {
@@ -1769,7 +1769,7 @@ echo -e "13. Updating Zenected\n"
 
 } &> /dev/null #un-hiding output
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-echo -e "14. Restarting services\n"
+echo -e "14. Restarting services"
 
 #hiding output
 {
