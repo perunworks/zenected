@@ -60,3 +60,7 @@ For news and updates please follow us on:
 
 - Facebook: https://www.facebook.com/Zenected/
 - Twitter: https://twitter.com/zenected
+
+##Last but not least...
+We are proud to be presented on BlackHat Asia 2017 Arsenal. 
+[![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2017.svg)](https://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/)
