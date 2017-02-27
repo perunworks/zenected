@@ -63,4 +63,4 @@ For news and updates please follow us on:
 
 ##Last but not least...
 We are proud to be presented on BlackHat Asia 2017 Arsenal. 
-[![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2017.svg)](https://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/)
+[![Black Hat Arsenal](https://github.com/toolswatch/badges/blob/master/arsenal/2017.svg)](https://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/)
