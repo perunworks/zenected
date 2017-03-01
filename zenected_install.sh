@@ -60,9 +60,29 @@ echo -e "4. Installing and configuring IPS"
 #hiding output
 {
 
-add-apt-repository -y ppa:oisf/suricata-stable > /dev/null 2>&1
-apt-get -qq update
-apt-get -qq -y install suricata oinkmaster > /dev/null
+##as described here: https://redmine.openinfosecfoundation.org/projects/suricata/wiki/Ubuntu_Installation
+
+sudo apt-get -y install libpcre3 libpcre3-dbg libpcre3-dev \
+build-essential autoconf automake libtool libpcap-dev libnet1-dev \
+libyaml-0-2 libyaml-dev zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 \
+make libmagic-dev libjansson-dev libjansson4 pkg-config
+
+sudo apt-get -y install libnetfilter-queue-dev libnetfilter-queue1 libnfnetlink-dev libnfnetlink0
+
+VER=3.1
+wget "http://www.openinfosecfoundation.org/download/suricata-$VER.tar.gz"
+tar -xvzf "suricata-$VER.tar.gz"
+cd "suricata-$VER"
+
+sudo apt-get -y install libnss3-dev libnspr4-dev
+
+./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libnspr-includes=/usr/include/nspr
+
+make
+sudo make install-full
+sudo ldconfig
+
+## ending Suricata install
 
 #### /etc/suricata/suricata.yaml
 cat > /etc/suricata/suricata.yaml << SURICATA
