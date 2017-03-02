@@ -1803,4 +1803,6 @@ echo -e "14. Restarting services"
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #THE END
-echo -e "\n\nThanks for your patience. The Zenected install script has now finished.\nRemember to check Resources (manuals and tips) at https://zenected.com\n\nYou can now configure Zenected by running the following command:\nsudo /opt/zenected/zenected_setup.zenx\n\n"
+echo -e "\n\nThanks for your patience. The Zenected install script has now finished.\nRemember to check Resources (manuals and tips) at https://zenected.com\n\nYou can now continue to configure Zenected.\n"
+read -r -n 1 -s -p "Press any key to continue and run Zenected Setup..."
+/opt/zenected/zenected_setup.zenx
