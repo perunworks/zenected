@@ -402,6 +402,7 @@ pcap-file:
 ipfw:
 default-rule-path: /etc/suricata/rules
 rule-files:
+ - perun_hashes.rules
  - perun_rules.rules
  - perun_feodo.abusech.rules
  - perun_phishing.rules
