@@ -573,6 +573,7 @@ cat > /etc/oinkmaster.conf << OINKMASTER
 # Oinkmaster config for PerunWorks
 # Perun Rules
 url = file:///opt/zenected/downloads/perun_rules.tar.gz
+url = file:///opt/zenected/downloads/perun_hashes.tar.gz
 url = file:///opt/zenected/downloads/perun_feodo_rules.tar.gz
 url = file:///opt/zenected/downloads/perun_zeus_rules.tar.gz
 url = file:///opt/zenected/downloads/perun_phishing_rules.tar.gz
