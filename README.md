@@ -1,5 +1,6 @@
 ![Zenected](https://zenected.com/zenected_logo_h120.png)
 ##Zenected Threat Defense VPN
+-----------------------------
 
 __Zenected__ is a cloud based security threat protection service. It’s delivered through a set of pre-configured services. Once a user connects to the __Zenected__, that user’s network traffic is filtered to keep the bad things out (e.g. phishing sites, malware). The only thing this a user has to configure on the endpoint device (be it a mobile device, a desktop or laptop or IoT device) is a VPN connection.
 
