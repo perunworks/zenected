@@ -90,10 +90,10 @@
 
 - name: download daloradius
   unarchive:
-#    src: 'https://zenected.com/downloads/daloradius-0.9-9.tar.gz'
-    src: daloradius-0.9-9.tar.gz
+    src: 'https://zenected.com/downloads/daloradius-0.9-9.tar.gz'
+#    src: daloradius-0.9-9.tar.gz
     dest: /opt/zenected/downloads/
-#    remote_src: yes
+    remote_src: yes
 
 - name: import daloradius sql
   mysql_db:
