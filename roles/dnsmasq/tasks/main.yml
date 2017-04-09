@@ -1,0 +1,14 @@
+---
+- name: install dependencies
+  apt:
+    name: dnsmasq
+
+- name: configure dnsmasq
+  copy:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+
+- name: restart dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted

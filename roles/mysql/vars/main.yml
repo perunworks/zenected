@@ -1,0 +1,5 @@
+---
+dependencies:
+  - mysql-server
+  - php5-mysql
+  - python-mysqldb

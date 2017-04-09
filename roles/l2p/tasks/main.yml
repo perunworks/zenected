@@ -1,0 +1,73 @@
+---
+- name: install dependencies
+  apt:
+    name: '{{ item }}'
+  with_items: '{{ dependencies }}'
+
+- name: dowload libreswan
+  unarchive:
+    src: "https://download.libreswan.org/libreswan-{{ swan_version }}.tar.gz"
+    dest: "/opt/"
+    remote_src: yes
+
+- name: modify makefile
+  copy:
+    src: "Makefile.inc.local"
+    dest: "/opt/libreswan-{{ swan_version }}/Makefile.inc.local"
+
+- name: compile
+  make:
+    chdir: "/opt/libreswan-{{ swan_version }}"
+    target: programs
+
+- name: install
+  make:
+    chdir: "/opt/libreswan-{{ swan_version }}"
+    target: install
+
+- name: get my public IP
+  ipify_facts:
+    api_url: http://ifconfig.co/json
+
+- name: configure ipsec
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/{{ item }}"
+  with_items:
+    - ipsec.conf
+    - ipsec.secrets
+
+- name: configure xl2tpd
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/xl2tpd/{{ item }}"
+  with_items:
+    - xl2tpd.conf
+
+- name: configure xl2tpd
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/ppp/{{ item }}"
+  with_items:
+    - options.xl2tpd
+
+- name: configure zenected
+  lineinfile:
+    dest: /etc/zenected/zenected.conf
+    regexp: "^ZEN_SHARED="
+    line: 'ZEN_SHARED="Zenected"'
+
+- name: configure systcl
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/{{ item }}"
+    backup: yes
+  with_items:
+    - sysctl.conf
+    - iptables.rules
+
+- name: configure ifpreup
+  copy:
+    src: iptablesload
+    dest: /etc/network/if-pre-up.d/iptablesload
+    mode: 0755

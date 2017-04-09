@@ -1,0 +1,57 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ dependencies }}"
+
+- name: debconf
+  debconf:
+    name: mysql-server
+    question: mysql-server/root_password
+    value: '{{ mysql_password }}'
+    vtype: password
+
+- name: debconf
+  debconf:
+    name: mysql-server
+    question: mysql-server/root_password_again
+    value: '{{ mysql_password }}'
+    vtype: password
+
+- name: zenected mysql password
+  lineinfile:
+    dest: /etc/zenected/zenected.conf
+    regexp: '^ZEN_MYSQL='
+    line: 'ZEN_MSQL="{{ mysql_password }}"'
+
+- name: install mysql db
+  command: mysql_install_db
+
+
+- block:
+    - name: Set root user password
+      mysql_user:
+        name: root
+        host: localhost
+        password: "{{ mysql_password }}"
+        check_implicit_admin: yes
+        login_user: root
+        state: present
+  rescue:
+    - name: Set root user password
+      mysql_user:
+        name: root
+        host: localhost
+        password: "{{ mysql_password }}"
+        check_implicit_admin: yes
+        login_user: root
+        login_password: "{{ mysql_password }}"
+        state: present
+
+- name: Secure install
+  shell: 'mysql -u root -p{{ mysql_password }} -e "{{ item }}"'
+  with_items:
+    - "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')"
+    - "DELETE FROM mysql.user WHERE User=''"
+    - "DELETE FROM mysql.db WHERE Db='test' OR Db='test_%'"
+    - "FLUSH PRIVILEGES"

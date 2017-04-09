@@ -1,0 +1,19 @@
+---
+dependencies:
+  - fail2ban
+  - curl
+  - git
+  - mysql-client
+  - debconf
+  - sed
+  - sqlite3
+
+zenected_directories:
+  - downloads
+  - dns
+  - url
+
+directories:
+  - /etc/zenected
+  - /var/www/zen/users
+  - /etc/ipsec.d/examples

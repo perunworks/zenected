@@ -1,0 +1,72 @@
+---
+- name: install dependencies
+  apt:
+    name: software-properties-common
+
+- name: add key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: EDEA5A7B
+
+- name: add repository
+  apt_repository:
+    repo: deb http://repository.perunworks.com/ trusty main
+
+- name: install zenected
+  apt:
+    name: zenected-aws
+    update_cache: yes
+
+- name: change rc.local
+  blockinfile:
+    dest: /etc/rc.local
+    marker: "# {mark} Zenected"
+    block: |
+      sudo /opt/zenected/zenected_restart.zenx
+
+- name: drop create radius db
+  mysql_db:
+    login_password: '{{ mysql_password }}'
+    login_user: root
+    name: zenredir
+    state: '{{ item }}'
+  with_items:
+    - absent
+    - present
+
+- name: grant privileges
+  shell: mysql -u root -p{{ mysql_password }} -e "GRANT ALL ON zenredir.* TO zenredir@localhost IDENTIFIED BY '{{ zenredir_password }}'"
+
+- name: flush privileges
+  command: 'mysql -u root -p{{ mysql_password }} -e "FLUSH PRIVILEGES"'
+
+- name: configure zenected
+  lineinfile:
+    dest: /etc/zenected/zenected.conf
+    regexp: "{{ item[0] }}"
+    line: "{{ item[1] }}"
+  with_items:
+    - [ '^ZEN_REDIR_MYSQL=', 'ZEN_REDIR_MYSQL="{{ zenredir_password }}"' ]
+    - [ '^ZEN_UPDATES_H=', 'ZEN_UPDATES_H="{{ update_h }}"' ]
+    - [ '^ZEN_UPDATES_M=', 'ZEN_UPDATES_M="{{ update_m }}' ]
+
+- name: configure zenected php
+  template:
+    src: zenected.conf.php.j2
+    dest: /var/www/html/zenected.conf.php
+
+- name: zenected update
+  command: /opt/zenected/zenected_update.zenx
+
+- name: restart services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - ipsec
+    - xl2tpd
+    - freeradius
+
+- name: show message
+  debug:
+    msg: "Connect to the host and run /opt/zenected/zenected_setup.zenx. Check Resources at https://zenected.com"

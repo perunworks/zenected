@@ -1,0 +1,50 @@
+---
+- name: install dependencies
+  apt:
+    update_cache: yes
+    name: "{{ item }}"
+  with_items: "{{ dependencies }}"
+
+- name: download source # why not install packet?
+  unarchive:
+    src: "http://www.openinfosecfoundation.org/download/suricata-{{ suricata_version }}.tar.gz"
+    dest: "/opt"
+    remote_src: True
+
+- name: configure source
+  command: "./configure --enable-nfqueue --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-libnss-libraries=/usr/lib --with-libnss-includes=/usr/include/nss/ --with-libnspr-libraries=/usr/lib --with-libnspr-includes=/usr/include/nspr"
+  args:
+    chdir: "/opt/suricata-{{ suricata_version }}"
+
+- name: make suricata
+  make:
+    chdir: "/opt/suricata-{{ suricata_version }}"
+
+- name: install suricata
+  make:
+    chdir: "/opt/suricata-{{ suricata_version }}"
+    target: "install-full"
+  become: yes
+
+- name: ldocnfig
+  command: "ldconfig"
+  args:
+    chdir: "/opt/suricata-{{ suricata_version }}"
+
+- name: configure suricata
+  template:
+    src: suricata.yml.j2
+    dest: /etc/suricata/suricata.yml
+
+- name: configure oinkmaster
+  file:
+    src: oinkmaster.conf
+    dest: /etc/oinkmaster.conf
+
+- name: configure suricata to run at boot
+  copy:
+    src: suricata
+    dest: /etc/default/suricata
+
+- name: start suricata
+  command: 'suricata -D -c /etc/suricata/suricata.yaml -i eth0 --init-errors-fatal'

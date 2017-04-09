@@ -1,0 +1,122 @@
+---
+- name: install dependencies
+  apt:
+    name: '{{ item }}'
+  with_items: '{{ dependencies }}'
+
+- name: configure zen radius
+  lineinfile:
+    dest: /etc/zenected/zenected.conf
+    regexp: '{{ item[0] }}'
+    line: '{{ item[1] }}'
+  with_items:
+    - [ '^ZEN_RADIUS_SHARED=', 'ZEN_RADIUS_SHARED="{{ radius_password }}"' ]
+    - [ '^ZEN_RADIUS_MYSQL=', 'ZEN_RADIUS_MYSQL="{{ radius_mysql_password }}"' ]
+
+- name: change host file
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127.0.0.1'
+    line: '127.0.0.1 localhost {{ansible_hostname}}'
+
+- name: change postinst
+  lineinfile:
+    dest: /var/lib/dpkg/info/freeradius-mysql.postinst
+    regexp: 'force-reload'
+    line: 'restart'
+
+- name: postint
+  command: /var/lib/dpkg/info/freeradius-mysql.postinst
+
+- name: drop create radius db
+  mysql_db:
+    login_password: '{{ mysql_password }}'
+    login_user: root
+    name: radius
+    state: '{{ item }}'
+  with_items:
+    - absent
+    - present
+
+- name: grant privileges
+  shell: mysql -u root -p{{ mysql_password }} -e "GRANT ALL ON radius.* TO radius@localhost IDENTIFIED BY '{{ radius_mysql_password }}'"
+
+- name: flush privileges
+  shell: 'mysql -u root -p{{ mysql_password }} -e "FLUSH PRIVILEGES"'
+
+- name: import schema.sql
+  mysql_db:
+    state: import
+    name: radius
+    login_user: radius
+    login_password: '{{ radius_mysql_password }}'
+    target: /etc/freeradius/sql/mysql/schema.sql
+
+- name: sites available configuration
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/freeradius/sites-available/{{ item }}"
+  with_items:
+    - inner-tunnel
+    - default
+
+- name: radiusd configuration
+  copy:
+    src: radiusd.conf
+    dest: /etc/freeradius/radiusd.conf
+
+- name: freeradius configuration
+  template:
+    src: "{{ item }}.conf.j2"
+    dest: "/etc/freeradius/{{ item }}.conf"
+  with_items:
+    - sql
+    - clients
+
+- name: radius client configuration
+  copy:
+    src: '{{ item }}'
+    dest: '/etc/radiusclient/{{ item }}'
+  with_items:
+    - radiusclient.conf
+    - dictionary.microsoft
+    - dictionary
+
+- name: radius server configuration
+  template:
+    src: servers.j2
+    dest: /etc/radiusclient/servers
+    mode: 0600
+
+- name: download daloradius
+  unarchive:
+#    src: 'https://zenected.com/downloads/daloradius-0.9-9.tar.gz'
+    src: daloradius-0.9-9.tar.gz
+    dest: /opt/zenected/downloads/
+#    remote_src: yes
+
+- name: import daloradius sql
+  mysql_db:
+    state: import
+    name: radius
+    login_user: radius
+    login_password: '{{ radius_mysql_password }}'
+    target: /opt/zenected/downloads/daloradius-0.9-9/contrib/db/mysql-daloradius.sql
+
+- name: copy daloradius files
+  shell: "cp -r /opt/zenected/downloads/daloradius-0.9-9/* /var/www/zen/users" # copy with remote_src doesn't support recursion
+
+- name: configure daloradius
+  lineinfile:
+    dest: /var/www/zen/users/library/daloradius.conf.php
+    regexp: '{{ item[0] }}'
+    line: '{{ item[1] }}'
+  with_items:
+    - [ "_USER'] = 'root';", "$configValues['CONFIG_DB_USER'] = 'radius';" ]
+    - [ "_PASS'] = '';", "$configValues['CONFIG_DB_PASS'] = '{{ radius_mysql_password }}';" ]
+    - [ "_RADIUSSECRET'] = '';", "$configValues['CONFIG_MAINT_TEST_USER_RADIUSSECRET'] = '{{ radius_password }}';" ]
+
+- name: restart freeradius
+  service:
+    name: freeradius
+    state: restarted

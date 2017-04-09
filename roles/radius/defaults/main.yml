@@ -1,0 +1,4 @@
+---
+radius_password: "{{ lookup('password', 'credentials/radius/password chars=ascii_letters,digits,hexdigits length=15') }}"
+radius_mysql_password: "{{ lookup('password', 'credentials/radius/mysqlpassword chars=ascii_letters,digits,hexdigits length=15') }}"
+mysql_password: "{{ lookup('password', 'credentials/db/mysqlpassword chars=ascii_letters,digits,hexdigits length=15') }}"
