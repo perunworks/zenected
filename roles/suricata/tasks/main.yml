@@ -47,4 +47,4 @@
     dest: /etc/default/suricata
 
 - name: start suricata
-  command: 'suricata -D -c /etc/suricata/suricata.yaml -i eth0 --init-errors-fatal'
+  shell: 'suricata -D -c /etc/suricata/suricata.yaml -q 0'
