@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.hostname = "#{name}"
       node.vm.network :private_network, ip: box["ip"], netmask: "255.255.255.0"
       box["ports"].each do |id, ports|
-        node.vm.network :forwarded_port, guest: ports["guest"], host: ports["host"], id: id
+        node.vm.network :forwarded_port, guest: ports["guest"], host: ports["host"], protocol: ports["protocol"], id: id
       end
 
       node.vm.provider "virtualbox" do |v|
