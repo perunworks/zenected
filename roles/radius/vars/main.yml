@@ -1,0 +1,6 @@
+---
+dependencies:
+  - radiusclient1
+  - freeradius #Dpkg::Options::=--force-confnew
+  - freeradius-mysql #Dpkg::Options::=--force-confnew
+  - libfreeradius2

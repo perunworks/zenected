@@ -1,0 +1,4 @@
+---
+zenredir_password: "{{ lookup('password', 'credentials/zenected/password chars=ascii_letters,digits,hexdigits length=15') }}"
+update_h: "{{ 23 | random}}"
+update_m: "{{ 59 | random}}"

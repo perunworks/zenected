@@ -1,0 +1,61 @@
+# -*- text -*-
+
+server inner-tunnel {
+listen {
+       ipaddr = 127.0.0.1
+       port = 18120
+       type = auth
+}
+authorize {
+        chap
+        mschap
+        suffix
+        update control {
+               Proxy-To-Realm := LOCAL
+        }
+        eap {
+                ok = return
+        }
+        files
+        sql
+        expiration
+        logintime
+        pap
+}
+
+authenticate {
+        Auth-Type PAP {
+                pap
+        }
+        Auth-Type CHAP {
+                chap
+        }
+        Auth-Type MS-CHAP {
+                mschap
+        }
+        #  against /etc/passwd!  See the FAQ for details.
+        #
+        unix
+        eap
+}
+session {
+        radutmp
+        sql
+}
+
+post-auth {
+        Post-Auth-Type REJECT {
+                # log failed authentications in SQL, too.
+#               sql
+                attr_filter.access_reject
+        }
+}
+
+pre-proxy {
+}
+
+post-proxy {
+        eap
+}
+
+} # inner-tunnel server block

@@ -1,0 +1,48 @@
+---
+- name: install apache2
+  apt:
+    name: apache2
+
+- name: configure dir
+  copy:
+    src: dir.conf
+    dest: /etc/apache2/mods-enabled/dir.conf
+
+- name: configure 000 default
+  copy:
+    src: 000-default.conf
+    dest: /etc/apache2/sites-available/000-default.conf
+
+- name: configure zenusers-ssl # why not lets encrypt cert?
+  copy:
+    src: zenusers-ssl.conf
+    dest: /etc/apache2/sites-available/zenusers-ssl.conf
+
+- name: index zen
+  copy:
+    src: index.html
+    dest: /var/www/zen/index.html
+
+- name: servername apache
+  lineinfile:
+    dest: /etc/apache2/apache2.conf
+    regexp: "^ServerName"
+    line: "ServerName localhost"
+
+- name: apache2 ssl module
+  apache2_module:
+    state: present
+    name: ssl
+
+- name: apache2 autoindex module
+  apache2_module:
+    state: absent
+    name: autoindex
+
+- name: add site zenusers-ssl
+  command: "a2ensite zenusers-ssl.conf"
+
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted

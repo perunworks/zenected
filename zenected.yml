@@ -1,0 +1,25 @@
+---
+- name: install zenected
+  hosts: zenected
+  become: yes
+  roles:
+    - role: zenected.pre
+      tags: zenected.pre
+    - role: apache
+      tags: apache
+    - role: mysql
+      tags: mysql
+    - role: php
+      tags: php
+    - role: suricata
+      tags: suricata
+    - role: radius
+      tags: radius
+    - role: squid
+      tags: squid
+    - role: l2p
+      tags: l2p
+    - role: dnsmasq
+      tags: dnsmasq
+    - role: zenected
+      tags: zenected

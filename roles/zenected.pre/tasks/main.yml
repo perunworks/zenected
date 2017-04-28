@@ -1,0 +1,39 @@
+---
+- name: upgrade dist
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: install dependencies
+  apt:
+    name: "{{ item }}"
+  with_items: "{{ dependencies }}"
+
+- name: create necessary directories
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items: "{{ directories }}"
+
+- name: create necessary zenected directories
+  file:
+    state: directory
+    path: "/opt/zenected/{{ item }}"
+  with_items: "{{ zenected_directories }}"
+
+- name: get public IP
+  ipify_facts:
+    api_url: http://ifconfig.co/json
+
+- name: create zenected configuration
+  template:
+    src: zenected.conf.j2
+    dest: /etc/zenected/zenected.conf
+
+- name: create update crontab
+  cron:
+    minute: "0"
+    hour: "3"
+    name: "apt-get upgrade"
+    job: "/usr/bin/apt-get update && /usr/bin/apt-get -y upgrade >> /var/log/apt/myupdates.log"
+    # needs a logrotate rule?
